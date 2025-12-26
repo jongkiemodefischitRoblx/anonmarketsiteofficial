@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AnonMarketSite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#0f0f0f,#111);color:white;}
+.container{width:90%;max-width:1200px;margin:auto;padding:20px;}
+h1{text-align:center;margin-top:20px;font-weight:600;}
+button{cursor:pointer;border:none;border-radius:12px;padding:12px 25px;font-weight:600;transition:.3s;}
+button:hover{transform:scale(1.05);}
+.glass-card{background:rgba(255,255,255,0.1);border-radius:15px;padding:25px;margin:20px 0;box-shadow:0 8px 25px rgba(0,255,255,0.2);backdrop-filter:blur(15px);transition:.3s;position:relative;}
+.glass-card:hover{transform:translateY(-5px);}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+.card-header h3{margin:0;font-weight:600;display:flex;align-items:center;gap:5px;}
+.card-header span{background:#00ffd5;padding:5px 12px;border-radius:12px;font-weight:600;}
+input,select,textarea{width:100%;padding:10px;margin-top:10px;border-radius:10px;border:none;outline:none;}
+#produk,#historyContainer{display:none;}
+#popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:center;z-index:999;display:none;}
+.popBox{background:rgba(255,255,255,0.95);color:black;padding:25px;border-radius:15px;width:90%;max-width:400px;text-align:center;animation:scale .4s ease;}
+@keyframes scale{from{opacity:0;transform:scale(.6);}to{opacity:1;transform:scale(1);}}
+.progress{width:0;height:6px;background:#00ffc8;border-radius:10px;transition:1.8s linear;margin-top:10px;}
+.cs-icons{display:flex;justify-content:center;margin-top:15px;gap:15px;}
+.cs-icons a{display:flex;justify-content:center;align-items:center;width:50px;height:50px;background:#00ffd5;border-radius:50%;color:black;font-weight:700;text-decoration:none;transition:.3s;}
+.cs-icons a:hover{transform:scale(1.1);}
+.history-item{border-bottom:1px solid #ccc;padding:10px 0;cursor:pointer;}
+.history-item pre{white-space:pre-wrap;}
+.badge{position:absolute;top:15px;right:15px;background:linear-gradient(45deg,#00ffb3,#00dfff);color:black;font-weight:600;padding:5px 10px;border-radius:12px;font-size:12px;box-shadow:0 3px 10px rgba(0,0,0,0.3);animation:badgeFade 1s ease;display:none;}
+@keyframes badgeFade{0%{opacity:0;transform:scale(0.5);}100%{opacity:1;transform:scale(1);}}
+.card-wrapper{position:relative;}
+.card-header img{width:25px;height:25px;}
+@media(max-width:600px){.glass-card{padding:15px;}}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>AnonMarketSite</h1>
+<p style="text-align:center;">Selamat datang di website resmi AnonMarketSite</p>
+<div style="text-align:center;"><button id="btnTampilProduk" onclick="showProduk()">Tampilkan Produk</button></div>
+
+<div id="produk">
+
+<!-- SEWA BOT -->
+<div class="glass-card card-wrapper">
+<div class="badge">✨ Best Seller</div>
+<div class="card-header">
+<h3>🛒 SEWA BOT JAGA GRUP <img src="https://files.catbox.moe/jzndry.jpg" alt="Robot"></h3>
+<span id="hargaBot">Rp0</span>
+</div>
+<label>Pilih Durasi</label>
+<select id="jenisDurasi" onchange="updateHargaBot()">
+<option value="menit">Menit</option>
+<option value="bulan">Bulan</option>
+<option value="permanen">Permanen</option>
+</select>
+<div id="inputDurasi">
+<label>Durasi (jumlah)</label>
+<input type="number" id="menitBot" placeholder="contoh: 10">
+</div>
+<label>Link Grup WhatsApp</label>
+<input id="linkBot" placeholder="https://chat.whatsapp.com/...">
+<div style="text-align:center;margin-top:10px;"><button onclick="orderBot()">Beli</button></div>
+</div>
+
+<!-- PANEL -->
+<div class="glass-card">
+<div class="card-header">
+<h3>⚡ PANEL PTREDOCTULY <img src="https://files.catbox.moe/s02xk2.png "alt="Panel"></h3>
+<span id="hargaRam">Rp0</span>
+</div>
+<label>Username</label>
+<input id="userPanel">
+<label>Pilih RAM</label>
+<select id="ramPanel" onchange="updateHargaRam()">
+<option value="0">-- Pilih RAM --</option>
+<option value="1000">1GB - 1K</option>
+<option value="2000">2GB - 2K</option>
+<option value="3000">3GB - 3K</option>
+<option value="4000">4GB - 4K</option>
+<option value="5000">5GB - 5K</option>
+<option value="6000">6GB - 6K</option>
+<option value="7000">7GB - 7K</option>
+<option value="8000">8GB - 8K</option>
+<option value="9000">9GB - 9K</option>
+<option value="10000">UNLIMITED - 10K</option>
+</select>
+<div style="text-align:center;margin-top:10px;"><button onclick="orderPanel()">Beli</button></div>
+</div>
+
+<!-- CS -->
+<div class="glass-card">
+<h3>💬 CS Resmi</h3>
+<div class="cs-icons">
+<a href="https://wa.me/62881038151793" target="_blank">WA</a>
+<a href="https://t.me/anonmarketsiteofficial" target="_blank">TG</a>
+</div>
+<p style="font-size:12px;margin-top:10px;color:#ccc;">
+Laporkan jika ada yang meniru Website Kami. Resmi hanya di: https://anonmarketsiteofficial.vercel.app
+</p>
+</div>
+
+<!-- History -->
+<div class="glass-card" id="historyContainer">
+<h3>📝 History Order</h3>
+<div id="historyList"></div>
+<button onclick="clearHistory()">Hapus History</button>
+</div>
+
+</div>
+</div>
+
+<footer style="text-align:center;padding:15px;margin-top:20px;color:#ccc;">© ANONMARKETSITE 2025</footer>
+
+<!-- Popup Order -->
+<div id="popup">
+<div class="popBox">
+<h3>Order Berhasil!</h3>
+<p>Invoice siap disalin sebelum diarahkan ke WhatsApp:</p>
+<textarea id="invoiceText" readonly></textarea>
+<button onclick="copyInvoice()">Copy Invoice</button>
+<div class="progress" id="bar"></div>
+</div>
+</div>
+
+<audio id="ting" src="https://www.myinstants.com/media/sounds/ding-sound-effect_2.mp3"></audio>
+
+<script>
+function showProduk(){document.getElementById('btnTampilProduk').style.display='none';document.getElementById('produk').style.display='block';}
+function invoiceID(){return "INV-AMS-2025-"+Math.floor(1000+Math.random()*9000);}
+function updateHargaRam(){let h=document.getElementById('ramPanel').value;document.getElementById('hargaRam').innerText="Rp"+h;}
+function updateHargaBot(){let jenis=document.getElementById("jenisDurasi").value;let inputDiv=document.getElementById("inputDurasi");if(jenis==="permanen"){inputDiv.style.display="none";document.getElementById("hargaBot").innerText="Rp10000";}else{inputDiv.style.display="block";document.getElementById("menitBot").value="";document.getElementById("hargaBot").innerText="Rp0";}}
+document.getElementById("menitBot").oninput=function(){let jenis=document.getElementById("jenisDurasi").value;let val=this.value;if(jenis==="menit"){document.getElementById("hargaBot").innerText="Rp"+(val*500);}if(jenis==="bulan"){document.getElementById("hargaBot").innerText="Rp"+(val*1000);}}
+function updateBestSeller(){let count=parseInt(localStorage.getItem('bestSellerBot')||'0');let badge=document.querySelector('.badge');badge.style.display=count>=5?'block':'none';}
+let currentInvoice="";
+function showNotif(invoice){document.getElementById("popup").style.display="flex";document.getElementById("ting").play();document.getElementById("invoiceText").value=invoice;currentInvoice=invoice;saveHistory(invoice);document.getElementById("bar").style.width="0";setTimeout(()=>{document.getElementById("bar").style.width="100%";},50);setTimeout(()=>{document.getElementById("popup").style.display="none";window.location.href=`https://wa.me/62881038151793?text=${encodeURIComponent(invoice+"\n\nMohon diproses ya Admin 🙏\nTerima kasih.\n🌐 Website Resmi: https://anonmarketsiteofficial.vercel.app")}`;},2000);}
+function copyInvoice(){navigator.clipboard.writeText(currentInvoice);alert("Invoice berhasil disalin!");}
+function saveHistory(invoice){let history=JSON.parse(localStorage.getItem('anonHistory')||'[]');history.unshift(invoice);localStorage.setItem('anonHistory',JSON.stringify(history));showHistory();}
+function showHistory(){let history=JSON.parse(localStorage.getItem('anonHistory')||'[]');let list=document.getElementById('historyList');if(history.length===0){document.getElementById('historyContainer').style.display='none';list.innerHTML='';return;}document.getElementById('historyContainer').style.display='block';list.innerHTML=history.map((inv,i)=>`<div class="history-item"><b>#${i+1}</b><pre>${inv}</pre></div>`).join('');}
+function clearHistory(){if(confirm("Yakin ingin menghapus semua history?")){localStorage.removeItem('anonHistory');showHistory();}}
+function orderBot(){let jenis=document.getElementById("jenisDurasi").value;let link=document.getElementById("linkBot").value;let harga=0,durasiText="";if(jenis==="permanen"){harga=10000;durasiText="Permanen";}else{let val=document.getElementById("menitBot").value;if(!val) return alert("Isi durasi terlebih dahulu!");if(jenis==="menit"){harga=val*500; durasiText=val+" Menit";}if(jenis==="bulan"){harga=val*1000; durasiText=val+" Bulan";}}if(!link) return alert("Isi link grup terlebih dahulu!");let id=invoiceID();let invoice=`📄 AnonMarketSite - Order Request
+ID Order : ${id}
+📌 Produk : Sewa Bot Jaga Grup
+⏳ Durasi : ${durasiText}
+💰 Total : Rp${harga}
+🔗 Grup : ${link}`;let count=parseInt(localStorage.getItem('bestSellerBot')||'0');localStorage.setItem('bestSellerBot',count+1);updateBestSeller();showNotif(invoice);}
+function orderPanel(){let user=document.getElementById("userPanel").value;let ram=document.getElementById("ramPanel").value;if(!user||ram=="0") return alert("Lengkapi data!");let id=invoiceID();let invoice=`📄 AnonMarketSite - Order Request
+ID Order : ${id}
+📦 Produk : Panel Ptredoctuly
+👤 Username : ${user}
+🖥 RAM : ${ram} MB
+💰 Total : Rp${ram}`;showNotif(invoice);}
+window.onload=function(){showHistory();updateBestSeller();}
+</script>
+
+</body>
+                                       </html>
