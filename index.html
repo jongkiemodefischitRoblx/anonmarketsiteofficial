@@ -69,7 +69,7 @@ input,select,textarea{width:100%;padding:10px;margin-top:10px;border-radius:10px
 <!-- PANEL -->
 <div class="glass-card">
 <div class="card-header">
-<h3>⚡ PANEL PTREDOCTULY <img src="https://files.catbox.moe/s02xk2.png "alt="Panel"></h3>
+<h3>⚡ PANEL PTREDOCTULY <img src="https://files.catbox.moe/s02xk2.png" alt="Panel"></h3>
 <span id="hargaRam">Rp0</span>
 </div>
 <label>Username</label>
@@ -132,29 +132,90 @@ Laporkan jika ada yang meniru Website Kami. Resmi hanya di: https://anonmarketsi
 function showProduk(){document.getElementById('btnTampilProduk').style.display='none';document.getElementById('produk').style.display='block';}
 function invoiceID(){return "INV-AMS-2025-"+Math.floor(1000+Math.random()*9000);}
 function updateHargaRam(){let h=document.getElementById('ramPanel').value;document.getElementById('hargaRam').innerText="Rp"+h;}
-function updateHargaBot(){let jenis=document.getElementById("jenisDurasi").value;let inputDiv=document.getElementById("inputDurasi");if(jenis==="permanen"){inputDiv.style.display="none";document.getElementById("hargaBot").innerText="Rp10000";}else{inputDiv.style.display="block";document.getElementById("menitBot").value="";document.getElementById("hargaBot").innerText="Rp0";}}
-document.getElementById("menitBot").oninput=function(){let jenis=document.getElementById("jenisDurasi").value;let val=this.value;if(jenis==="menit"){document.getElementById("hargaBot").innerText="Rp"+(val*500);}if(jenis==="bulan"){document.getElementById("hargaBot").innerText="Rp"+(val*1000);}}
+
+// SEWA BOT Harga Update
+function updateHargaBot(){
+  let jenis=document.getElementById("jenisDurasi").value;
+  let inputDiv=document.getElementById("inputDurasi");
+  if(jenis==="permanen"){inputDiv.style.display="none";document.getElementById("hargaBot").innerText="Rp10000";}
+  else{inputDiv.style.display="block";document.getElementById("menitBot").value="";document.getElementById("hargaBot").innerText="Rp0";}
+}
+document.getElementById("menitBot").oninput=function(){
+  let jenis=document.getElementById("jenisDurasi").value;
+  let val=this.value;
+  if(jenis==="menit"){document.getElementById("hargaBot").innerText="Rp"+(val*50);}
+  if(jenis==="bulan"){document.getElementById("hargaBot").innerText="Rp"+(val*5000);}
+}
+
+// Best Seller
 function updateBestSeller(){let count=parseInt(localStorage.getItem('bestSellerBot')||'0');let badge=document.querySelector('.badge');badge.style.display=count>=5?'block':'none';}
+
+// History
 let currentInvoice="";
-function showNotif(invoice){document.getElementById("popup").style.display="flex";document.getElementById("ting").play();document.getElementById("invoiceText").value=invoice;currentInvoice=invoice;saveHistory(invoice);document.getElementById("bar").style.width="0";setTimeout(()=>{document.getElementById("bar").style.width="100%";},50);setTimeout(()=>{document.getElementById("popup").style.display="none";window.location.href=`https://wa.me/62881038151793?text=${encodeURIComponent(invoice+"\n\nMohon diproses ya Admin 🙏\nTerima kasih.\n🌐 Website Resmi: https://anonmarketsiteofficial.vercel.app")}`;},2000);}
+function showNotif(invoice){
+    document.getElementById("popup").style.display="flex";
+    document.getElementById("ting").play();
+    document.getElementById("invoiceText").value=invoice;
+    currentInvoice=invoice;
+    saveHistory(invoice);
+    document.getElementById("bar").style.width="0";
+    setTimeout(()=>{document.getElementById("bar").style.width="100%";},50);
+    setTimeout(()=>{
+        document.getElementById("popup").style.display="none";
+        window.location.href=`https://wa.me/62881038151793?text=${encodeURIComponent(invoice+"\n\nMohon diproses ya Admin 🙏\nTerima kasih.\n🌐 Website Resmi: https://anonmarketsiteofficial.vercel.app")}`;
+    },2000);
+}
 function copyInvoice(){navigator.clipboard.writeText(currentInvoice);alert("Invoice berhasil disalin!");}
 function saveHistory(invoice){let history=JSON.parse(localStorage.getItem('anonHistory')||'[]');history.unshift(invoice);localStorage.setItem('anonHistory',JSON.stringify(history));showHistory();}
 function showHistory(){let history=JSON.parse(localStorage.getItem('anonHistory')||'[]');let list=document.getElementById('historyList');if(history.length===0){document.getElementById('historyContainer').style.display='none';list.innerHTML='';return;}document.getElementById('historyContainer').style.display='block';list.innerHTML=history.map((inv,i)=>`<div class="history-item"><b>#${i+1}</b><pre>${inv}</pre></div>`).join('');}
 function clearHistory(){if(confirm("Yakin ingin menghapus semua history?")){localStorage.removeItem('anonHistory');showHistory();}}
-function orderBot(){let jenis=document.getElementById("jenisDurasi").value;let link=document.getElementById("linkBot").value;let harga=0,durasiText="";if(jenis==="permanen"){harga=10000;durasiText="Permanen";}else{let val=document.getElementById("menitBot").value;if(!val) return alert("Isi durasi terlebih dahulu!");if(jenis==="menit"){harga=val*500; durasiText=val+" Menit";}if(jenis==="bulan"){harga=val*1000; durasiText=val+" Bulan";}}if(!link) return alert("Isi link grup terlebih dahulu!");let id=invoiceID();let invoice=`📄 AnonMarketSite - Order Request
+
+// Order SEWA BOT
+function orderBot(){
+  let jenis=document.getElementById("jenisDurasi").value;
+  let link=document.getElementById("linkBot").value;
+  let harga=0,durasiText="";
+  if(jenis==="permanen"){harga=10000;durasiText="Permanen";}
+  else{
+    let val=document.getElementById("menitBot").value;
+    if(!val) return alert("Isi durasi terlebih dahulu!");
+    if(jenis==="menit"){harga=val*50; durasiText=val+" Menit";}
+    if(jenis==="bulan"){harga=val*5000; durasiText=val+" Bulan";}
+  }
+  if(!link) return alert("Isi link grup terlebih dahulu!");
+  let id=invoiceID();
+  let invoice=`📄 AnonMarketSite - Order Request
 ID Order : ${id}
 📌 Produk : Sewa Bot Jaga Grup
 ⏳ Durasi : ${durasiText}
 💰 Total : Rp${harga}
-🔗 Grup : ${link}`;let count=parseInt(localStorage.getItem('bestSellerBot')||'0');localStorage.setItem('bestSellerBot',count+1);updateBestSeller();showNotif(invoice);}
-function orderPanel(){let user=document.getElementById("userPanel").value;let ram=document.getElementById("ramPanel").value;if(!user||ram=="0") return alert("Lengkapi data!");let id=invoiceID();let invoice=`📄 AnonMarketSite - Order Request
+🔗 Grup : ${link}`;
+
+  let count=parseInt(localStorage.getItem('bestSellerBot')||'0');
+  localStorage.setItem('bestSellerBot',count+1);
+  updateBestSeller();
+
+  showNotif(invoice);
+}
+
+// Order PANEL
+function orderPanel(){
+  let user=document.getElementById("userPanel").value;
+  let ram=document.getElementById("ramPanel").value;
+  if(!user || ram=="0") return alert("Lengkapi data!");
+  let id=invoiceID();
+  let invoice=`📄 AnonMarketSite - Order Request
 ID Order : ${id}
 📦 Produk : Panel Ptredoctuly
 👤 Username : ${user}
 🖥 RAM : ${ram} MB
-💰 Total : Rp${ram}`;showNotif(invoice);}
+💰 Total : Rp${ram}`;
+  showNotif(invoice);
+}
+
+// Load
 window.onload=function(){showHistory();updateBestSeller();}
 </script>
 
 </body>
-                                       </html>
+</html>
